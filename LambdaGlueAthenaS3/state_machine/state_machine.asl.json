@@ -1,0 +1,334 @@
+{
+  "Comment": "Enterprise Data Quality and Analytics Pipeline for retail transactions",
+  "StartAt": "ValidateInput",
+  "States": {
+    "ValidateInput": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:validator",
+        "Payload.$": "$$"
+      },
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "States.TaskFailed"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.errorInfo",
+          "Next": "PublishFailure"
+        }
+      ],
+      "Next": "DetermineProcessingType"
+    },
+
+    "PublishFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:REGION:ACCOUNT:ingest-failures",
+        "Message.$": "States.Format('Validation failed for {} - {}', $$.Execution.Input.s3.object.key, $.errorInfo)"
+      },
+      "Next": "FailState"
+    },
+
+    "FailState": {
+      "Type": "Fail",
+      "Cause": "ValidationFailed",
+      "Error": "InputValidationError"
+    },
+
+    "DetermineProcessingType": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.processingType",
+          "StringEquals": "full",
+          "Next": "ParallelValidations"
+        }
+      ],
+      "Default": "QuickValidations"
+    },
+
+    "QuickValidations": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "SchemaValidation",
+          "States": {
+            "SchemaValidation": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:schema_validation",
+                "Payload.$": "$$"
+              },
+              "End": true
+            }
+          }
+        }
+      ],
+      "Next": "ArchiveOriginal"
+    },
+
+    "ParallelValidations": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "VirusScan",
+          "States": {
+            "VirusScan": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:virus_scan",
+                "Payload.$": "$$"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "SchemaValidation",
+          "States": {
+            "SchemaValidation": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:schema_validation",
+                "Payload.$": "$$"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "DuplicateDetection",
+          "States": {
+            "DuplicateDetection": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:duplicate_detection",
+                "Payload.$": "$$"
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "BusinessRules",
+          "States": {
+            "BusinessRules": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:business_rules",
+                "Payload.$": "$$"
+              },
+              "End": true
+            }
+          }
+        }
+      ],
+      "Next": "ArchiveOriginal",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.validationError",
+          "Next": "PublishFailure"
+        }
+      ]
+    },
+
+    "ArchiveOriginal": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:archive",
+        "Payload.$": "$$"
+      },
+      "Next": "StartGlueJob"
+    },
+
+    "StartGlueJob": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "retail-etl-job",
+        "Arguments": {
+          "--input_s3": "$.s3",
+          "--output_s3": "s3://processed-bucket/",
+          "--partition_key": "transaction_date"
+        }
+      },
+      "Retry": [
+        {
+          "ErrorEquals": ["Glue.JobRunStateException", "States.TaskFailed"],
+          "IntervalSeconds": 5,
+          "MaxAttempts": 4,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "PostETLVerification",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.glueError",
+          "Next": "PublishFailure"
+        }
+      ]
+    },
+
+    "PostETLVerification": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:post_etl_verifier",
+        "Payload.$": "$$"
+      },
+      "Next": "SubmitAthenaQuery",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.postEtlError",
+          "Next": "PublishFailure"
+        }
+      ]
+    },
+
+    "SubmitAthenaQuery": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:athena_submit",
+        "Payload.$": "$$"
+      },
+      "Next": "WaitForAthena",
+      "ResultPath": "$.athena"
+    },
+
+    "WaitForAthena": {
+      "Type": "Wait",
+      "Seconds": 10,
+      "Next": "CheckAthena"
+    },
+
+    "CheckAthena": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:athena_check",
+        "Payload.$": "$.athena"
+      },
+      "Next": "AthenaChoice",
+      "ResultPath": "$.athenaStatus"
+    },
+
+    "AthenaChoice": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.athenaStatus.status",
+          "StringEquals": "SUCCEEDED",
+          "Next": "ProcessQueryResults"
+        },
+        {
+          "Variable": "$.athenaStatus.status",
+          "StringEquals": "FAILED",
+          "Next": "PublishFailure"
+        }
+      ],
+      "Default": "WaitForAthena"
+    },
+
+    "ProcessQueryResults": {
+      "Type": "Map",
+      "ItemsPath": "$.athenaStatus.results",
+      "MaxConcurrency": 10,
+      "Iterator": {
+        "StartAt": "ProcessRecord",
+        "States": {
+          "ProcessRecord": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:record_processor",
+              "Payload.$": "$$"
+            },
+            "End": true
+          }
+        }
+      },
+      "Next": "GenerateReports"
+    },
+
+    "GenerateReports": {
+      "Type": "Parallel",
+      "Branches": [
+        {
+          "StartAt": "GenerateJSON",
+          "States": {
+            "GenerateJSON": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:report_generator",
+                "Payload": { "format": "json" }
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "GenerateCSV",
+          "States": {
+            "GenerateCSV": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:report_generator",
+                "Payload": { "format": "csv" }
+              },
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "GeneratePDF",
+          "States": {
+            "GeneratePDF": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::lambda:invoke",
+              "Parameters": {
+                "FunctionName": "arn:aws:lambda:REGION:ACCOUNT:function:report_generator",
+                "Payload": { "format": "pdf" }
+              },
+              "End": true
+            }
+          }
+        }
+      ],
+      "Next": "PublishSuccess"
+    },
+
+    "PublishSuccess": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:REGION:ACCOUNT:ingest-success",
+        "Message.$": "States.Format('Execution {} completed. GlueJobId: {}. AthenaId: {}. Reports: {}', $$.Execution.Id, $.glue.JobRunId, $.athenaStatus.queryExecutionId, $.reportLocations)"
+      },
+      "End": true
+    }
+  }
+}

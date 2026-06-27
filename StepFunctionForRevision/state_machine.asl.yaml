@@ -1,0 +1,165 @@
+# Comprehensive, heavily-commented AWS Step Functions state machine (ASL) in YAML
+# This file demonstrates nearly every common state type, configuration option,
+# error handling pattern, intrinsic function usage, and data flow control.
+# Note: AWS Step Functions expects JSON for the API; this YAML is for
+# readability and includes comments. Convert to JSON (e.g., with a small
+# script or an editor) before passing to the Step Functions APIs.
+
+Comment: |
+  Verbose AWS Step Functions example. Each state below is annotated to
+  explain Inputs, Outputs, Paths, Retries, Catches, and intrinsic functions.
+StartAt: ParallelExample
+TimeoutSeconds: 300 # Optional top-level timeout for the entire state machine
+States:
+  # Parallel state runs multiple branches at once and waits for all to finish.
+  ParallelExample:
+    Type: Parallel
+    Comment: "Runs two branches concurrently: one does a Map, the other invokes a Lambda."
+    Branches:
+      - StartAt: MapBranch
+        States:
+          # Map iterates over an array in the input and runs the Iterator for each element.
+          MapBranch:
+            Type: Map
+            ItemsPath: $.items # Path to the array this Map will iterate
+            Comment: "Map iterates over $.items and runs an iterator workflow for each item."
+            MaxConcurrency: 2 # Controls parallelism of iterations
+            Iterator:
+              StartAt: ProcessItem
+              States:
+                ProcessItem:
+                  Type: Task
+                  Resource: arn:aws:states:::lambda:invoke
+                  Comment: "Invokes a Lambda for each item. Uses Parameters to map item into payload."
+                  Parameters:
+                    FunctionName: arn:aws:lambda:us-east-1:123456789012:function:ProcessItemFunction
+                    Payload:
+                      item.$: "$" # forward current Map item as `item` in the Lambda payload
+                  ResultPath: $.lambdaResult # Place Lambda result under `.lambdaResult`
+                  TimeoutSeconds: 30
+                  Retry: # Retry policy for transient errors
+                    - ErrorEquals: [States.ALL]
+                      IntervalSeconds: 2
+                      MaxAttempts: 2
+                      BackoffRate: 2.0
+                  Catch: # Catch any error and record it, but do not fail the whole map
+                    - ErrorEquals: [States.ALL]
+                      ResultPath: $.errorInfo
+                      Next: HandleMapItemError
+                HandleMapItemError:
+                  Type: Pass
+                  Comment: "Simple pass-through for demonstration of Catch + ResultPath"
+                  Result: { handled: true }
+                  End: true
+            End: true
+      - StartAt: ParallelLambdaBranch
+        States:
+          ParallelLambdaBranch:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke.waitForTaskToken
+            Comment: |
+              Demonstrates callback pattern: a downstream process must call the
+              Step Functions task token to resume. The Lambda must be written to
+              accept and return the token. Here we include Parameters and ResultSelector.
+            Parameters:
+              FunctionName: arn:aws:lambda:us-east-1:123456789012:function:CallbackStarter
+              Payload:
+                token.$: "$$.Task.Token" # built-in task token for callback patterns
+                input.$: "$" # full input to the branch
+            ResultSelector:
+              startedAt.$: "$$.State.EnteredTime"
+              branchResult.$: "$.Payload"
+            ResultPath: $.callbackResult
+            HeartbeatSeconds: 60
+            TimeoutSeconds: 600
+            Retry:
+              - ErrorEquals: [States.ALL]
+                IntervalSeconds: 3
+                MaxAttempts: 3
+                BackoffRate: 2.0
+            Catch:
+              - ErrorEquals: [States.ALL]
+                Next: CallbackFailureHandler
+            End: true
+
+  # A Task state that demonstrates many Task options and data paths.
+  TaskExample:
+    Type: Task
+    Resource: arn:aws:states:::lambda:invoke
+    Comment: "Invokes a Lambda synchronously and demonstrates Parameters/ResultPath/OutputPath"
+    Parameters:
+      FunctionName: arn:aws:lambda:us-east-1:123456789012:function:WorkerFunction
+      Payload:
+        # Show how to pass a transformed payload into the Lambda
+        originalInput.$: "$"
+        staticValue: example
+    ResultSelector:
+      # ResultSelector lets you shape the raw Lambda result before applying ResultPath
+      status.$: "$.Payload.status"
+      data.$: "$.Payload.data"
+    ResultPath: $.taskResult
+    TimeoutSeconds: 120
+    HeartbeatSeconds: 10
+    Retry:
+      - ErrorEquals: [Lambda.Unknown, Lambda.ServiceException]
+        IntervalSeconds: 1
+        MaxAttempts: 2
+        BackoffRate: 2.0
+    Catch:
+      - ErrorEquals: [States.ALL]
+        ResultPath: $.taskError
+        Next: HandleTaskError
+    Next: ChoiceExample
+
+  HandleTaskError:
+    Type: Pass
+    Comment: "Normalize error shape and resume to ChoiceExample"
+    Result:
+      handled: true
+      reason: "task failed"
+    ResultPath: $.normalizedError
+    Next: ChoiceExample
+
+  CallbackFailureHandler:
+    Type: Fail
+    Comment: "Demonstration of a Fail state if the callback branch cannot be completed"
+    Error: CallbackFailed
+    Cause: "The callback branch failed after retries"
+
+  ChoiceExample:
+    Type: Choice
+    Comment: "Route execution based on values in the data model"
+    Choices:
+      - Variable: $.taskResult.status
+        StringEquals: success
+        Next: WaitExample
+      - Variable: $.taskResult.status
+        StringEquals: partial
+        Next: ParallelExample
+    Default: FailOnUnknownStatus
+
+  WaitExample:
+    Type: Wait
+    Comment: "Demonstrates three wait types; here we wait a fixed number of seconds."
+    Seconds: 5
+    Next: SucceedExample
+
+  SucceedExample:
+    Type: Succeed
+    Comment: "Successful terminal state. Good for positive completion paths."
+
+  FailOnUnknownStatus:
+    Type: Fail
+    Comment: "Fail the execution with a custom error when an unknown status is encountered."
+    Error: UnknownStatus
+    Cause: "Received an unhandled status value in taskResult.status"
+
+  # Minimal demonstration of intrinsic functions and a Pass state for transformations
+  IntrinsicDemo:
+    Type: Pass
+    Comment: "This Pass state demonstrates ResultPath and intrinsic function usage in a comment."
+    Result: { message: "intrinsic demo" }
+    ResultPath: $.intrinsics
+    Next: SucceedExample
+
+# End of States
