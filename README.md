@@ -92,23 +92,130 @@ Example:
 
 ## 3. Important Step Functions concepts
 
-### State machine
+### State machine structure
 
-A state machine is the workflow definition written in Amazon States Language (ASL).
+A Step Functions state machine is a workflow definition written in Amazon States Language (ASL). At the top level, it typically contains:
 
-### Execution
+- Comment: adds human-readable documentation
+- StartAt: the first state to execute
+- TimeoutSeconds: the maximum execution time allowed
+- Version: optional version identifier for the definition
+- States: the full collection of states in the workflow
 
-An execution is one run of the state machine.
+Example:
 
-### Input and output
+```json
+{
+  "Comment": "Simple workflow",
+  "StartAt": "FirstState",
+  "TimeoutSeconds": 300,
+  "States": {
+    "FirstState": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
+```
 
-Each state receives input and can produce output. You can shape this using:
+### Common state fields
 
-- InputPath
-- OutputPath
-- Parameters
-- ResultPath
-- ResultSelector
+Most states share common fields such as:
+
+- Type: the category of state, such as Task, Choice, Parallel, Map, Pass, Succeed, or Fail
+- Comment: explains the purpose of the state
+- Next: points to the next state in a linear flow
+- End: marks the state as terminal
+- Parameters: customizes the input passed to a downstream service or Lambda
+- InputPath, OutputPath, ResultPath, ResultSelector: control how input and output are processed
+- Retry and Catch: handle failures
+
+### Intrinsic functions
+
+Step Functions provides intrinsic functions to manipulate data at runtime. Common examples include:
+
+- States.Format: format strings
+- States.JsonToString: convert JSON to string
+- States.StringToJson: convert string to JSON
+- States.Array: create arrays
+- States.MathAdd, States.MathRandom, States.MathMultiply: perform simple math
+- States.ArrayPartition: split arrays for processing
+
+These are useful when you want to build dynamic values without writing custom code.
+
+### Input and output processing
+
+Each state receives input and can produce output. Step Functions gives you several ways to control this flow:
+
+- InputPath: select only a subset of the current input
+- Parameters: construct a new payload for the next step
+- ResultPath: place the result of a task into a specific part of the input object
+- OutputPath: select the final output that is passed onward
+- ResultSelector: transform task output without changing the input structure
+
+### Ways to identify components within JSON text
+
+Step Functions uses JSONPath-like syntax to identify values inside JSON data.
+
+Common examples include:
+
+- $: the entire input document
+- $.name: a field named name
+- $.details.id: a nested field
+- $.items[0]: the first item in an array
+- $.items[0].id: a nested value inside the first item
+- $$.Execution.Id: execution-level context such as the execution ID
+
+This is important for selecting the correct data before passing it to the next state.
+
+### Passing data along the state machine
+
+Data can be passed from one state to another in several ways:
+
+- By default, the full input is passed to the next state
+- With InputPath, only part of the input is forwarded
+- With Parameters, a new payload is built for the next state
+- With ResultPath, the result of a task is inserted into the current input object
+- With OutputPath, only the desired portion of the final output continues downstream
+
+A simple mental model is:
+
+- InputPath decides what input the state sees
+- Parameters decides what the state sends to a service
+- ResultPath decides where the result is stored
+- OutputPath decides what output continues downstream
+
+### Execution termination
+
+A state machine ends when it reaches a terminal state.
+
+Common terminal states are:
+
+- End: used by states such as Pass, Task, Parallel, and Map to stop execution normally
+- Succeed: a dedicated terminal state that stops execution successfully
+- Fail: a dedicated terminal state that stops execution with an error
+
+### Parallel and Map states
+
+#### Parallel state
+
+Use Parallel when multiple branches can run independently at the same time.
+
+Example use cases:
+
+- running several validations together
+- processing different business checks in parallel
+
+#### Map state
+
+Use Map when the same workflow must be executed for every item in an array.
+
+Example use cases:
+
+- processing each record in a batch
+- applying the same transformation to many files
+
+Both states are useful for fan-out processing and improve throughput when work is independent.
 
 ### Error handling
 
