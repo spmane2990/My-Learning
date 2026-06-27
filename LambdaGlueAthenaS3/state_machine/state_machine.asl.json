@@ -3,6 +3,7 @@
   "StartAt": "ValidateInput",
   "States": {
     "ValidateInput": {
+      "Comment": "Entry point of the workflow. This Task invokes the validator Lambda to check the uploaded file's presence, format, and metadata before any downstream processing begins.",
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
@@ -32,6 +33,7 @@
     },
 
     "PublishFailure": {
+      "Comment": "Publishes a failure message to SNS so operations or support teams are notified when validation or processing fails.",
       "Type": "Task",
       "Resource": "arn:aws:states:::sns:publish",
       "Parameters": {
@@ -42,12 +44,14 @@
     },
 
     "FailState": {
+      "Comment": "Terminal failure state that stops the execution with a defined error and cause.",
       "Type": "Fail",
       "Cause": "ValidationFailed",
       "Error": "InputValidationError"
     },
 
     "DetermineProcessingType": {
+      "Comment": "Uses Choice to decide whether the workflow should run the full validation path or a lighter quick-validation path based on the processingType input.",
       "Type": "Choice",
       "Choices": [
         {
@@ -60,12 +64,14 @@
     },
 
     "QuickValidations": {
+      "Comment": "A simplified Parallel branch that runs only the schema validation step when full validation is not required.",
       "Type": "Parallel",
       "Branches": [
         {
           "StartAt": "SchemaValidation",
           "States": {
             "SchemaValidation": {
+              "Comment": "Checks whether the incoming data follows the required schema before the workflow continues.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -81,12 +87,14 @@
     },
 
     "ParallelValidations": {
+      "Comment": "Runs several independent validation tasks in parallel to reduce total execution time and improve quality checks.",
       "Type": "Parallel",
       "Branches": [
         {
           "StartAt": "VirusScan",
           "States": {
             "VirusScan": {
+              "Comment": "Performs a virus or safety scan on the uploaded file before downstream processing.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -101,6 +109,7 @@
           "StartAt": "SchemaValidation",
           "States": {
             "SchemaValidation": {
+              "Comment": "Validates that the incoming data structure matches the expected schema.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -115,6 +124,7 @@
           "StartAt": "DuplicateDetection",
           "States": {
             "DuplicateDetection": {
+              "Comment": "Checks whether the incoming file or records have already been processed to avoid duplicate work.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -129,6 +139,7 @@
           "StartAt": "BusinessRules",
           "States": {
             "BusinessRules": {
+              "Comment": "Applies business-level validation rules to ensure the transaction data is acceptable.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -151,6 +162,7 @@
     },
 
     "ArchiveOriginal": {
+      "Comment": "Copies the original input object to an archive location so the raw file is preserved for auditing and replay.",
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
@@ -161,6 +173,7 @@
     },
 
     "StartGlueJob": {
+      "Comment": "Starts the Glue ETL job synchronously so the workflow waits until the transformation completes before moving forward.",
       "Type": "Task",
       "Resource": "arn:aws:states:::glue:startJobRun.sync",
       "Parameters": {
@@ -190,6 +203,7 @@
     },
 
     "PostETLVerification": {
+      "Comment": "Verifies that the Glue output exists and is structurally correct before the workflow proceeds to analytics.",
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
@@ -207,6 +221,7 @@
     },
 
     "SubmitAthenaQuery": {
+      "Comment": "Submits an Athena query to analyze the transformed data and returns the query execution ID for later tracking.",
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
@@ -218,12 +233,14 @@
     },
 
     "WaitForAthena": {
+      "Comment": "Pauses the workflow briefly before checking Athena query completion so the state machine does not poll too aggressively.",
       "Type": "Wait",
       "Seconds": 10,
       "Next": "CheckAthena"
     },
 
     "CheckAthena": {
+      "Comment": "Checks the status of the running Athena query and returns whether it is still running, succeeded, or failed.",
       "Type": "Task",
       "Resource": "arn:aws:states:::lambda:invoke",
       "Parameters": {
@@ -235,6 +252,7 @@
     },
 
     "AthenaChoice": {
+      "Comment": "Routes execution based on the Athena query status: continue on success, fail on error, or wait again while the query is still running.",
       "Type": "Choice",
       "Choices": [
         {
@@ -252,6 +270,7 @@
     },
 
     "ProcessQueryResults": {
+      "Comment": "Uses a Map state to process each Athena result item independently, which is useful for batch-style record handling.",
       "Type": "Map",
       "ItemsPath": "$.athenaStatus.results",
       "MaxConcurrency": 10,
@@ -259,6 +278,7 @@
         "StartAt": "ProcessRecord",
         "States": {
           "ProcessRecord": {
+            "Comment": "Processes one Athena result record and can calculate metrics or build downstream reporting data.",
             "Type": "Task",
             "Resource": "arn:aws:states:::lambda:invoke",
             "Parameters": {
@@ -273,12 +293,14 @@
     },
 
     "GenerateReports": {
+      "Comment": "Runs reporting tasks in parallel so multiple report formats can be generated concurrently.",
       "Type": "Parallel",
       "Branches": [
         {
           "StartAt": "GenerateJSON",
           "States": {
             "GenerateJSON": {
+              "Comment": "Generates a JSON report for downstream business consumption.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -293,6 +315,7 @@
           "StartAt": "GenerateCSV",
           "States": {
             "GenerateCSV": {
+              "Comment": "Generates a CSV report for tabular analysis or export.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -307,6 +330,7 @@
           "StartAt": "GeneratePDF",
           "States": {
             "GeneratePDF": {
+              "Comment": "Generates a PDF report for business presentation or formal distribution.",
               "Type": "Task",
               "Resource": "arn:aws:states:::lambda:invoke",
               "Parameters": {
@@ -322,6 +346,7 @@
     },
 
     "PublishSuccess": {
+      "Comment": "Publishes a success notification with execution metadata, Glue job information, Athena details, and report locations.",
       "Type": "Task",
       "Resource": "arn:aws:states:::sns:publish",
       "Parameters": {
