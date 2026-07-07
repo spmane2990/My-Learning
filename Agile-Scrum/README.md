@@ -73,6 +73,35 @@ Scrum is a lightweight, structured framework that helps people, teams, and organ
   [ Sprint Retrospective ]
 ```
 
+### The Relationship: Agile vs. Scrum
+
+The relationship between Agile and Scrum can be viewed as an **Umbrella Philosophy vs. a Practical Application**:
+
+* **Agile** is the grand philosophy or mindset (e.g., a "healthy lifestyle"). It outlines *what* ideals to value but doesn't mandate specific rules.
+* **Scrum** is a highly structured framework (e.g., a "strict meal plan"). It is a concrete, tactical implementation designed to achieve the Agile philosophy.
+* *Rule of thumb:* You can be Agile without using Scrum (e.g., using Kanban), but you cannot claim to do Scrum properly without following Agile values.
+
+### Key Structural Differences
+
+While they share the same objective, they function at entirely different layers of project execution:
+
+| Feature | Agile (The Philosophy) | Scrum (The Framework) |
+| --- | --- | --- |
+| **Nature** | Abstract, adaptable, and flexible. | Prescriptive, tactical, and rule-bound. |
+| **Roles** | Does not specify roles; values collaborative teams. | Mandates 3 exact accountabilities: **Product Owner, Scrum Master, Developers**. |
+| **Timeboxing** | Promotes frequent delivery on any reasonable scale. | Enforces strict, invariant loops called **Sprints** (1–4 weeks). |
+| **Events** | Encourages general regular synchronization. | Mandates exactly 4 ceremonies: **Planning, Daily Scrum, Review, and Retrospective**. |
+
+### Practical Mapping Examples
+
+To understand how Scrum grounds abstract Agile ideals into concrete reality:
+
+* **Agile Principle:** *"At regular intervals, the team reflects on how to become more effective..."*
+➔ **Scrum Application:** The team executes a strict, time-boxed **Sprint Retrospective** at the end of every single iteration.
+* **Agile Value:** *"Responding to change over following a plan."*
+➔ **Scrum Application:** The **Product Owner** dynamically manages and re-prioritizes the single source of truth—the **Product Backlog**—ensuring upcoming Sprints pivot based on shifting market needs.
+
+
 ### The 3 Pillars of Empiricism
 * **Transparency:** The emergent process and work must be visible to those performing the work as well as those receiving the work.
 * **Inspection:** The Scrum artifacts and the progress toward agreed goals must be inspected frequently and diligently to detect potential variances.
