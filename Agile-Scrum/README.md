@@ -8,17 +8,17 @@ Welcome to the definitive reference manual for modern software delivery framewor
 
 1. [The Lifecycle Conundrum: Waterfall vs. Agile vs. Lean](#1-the-lifecycle-conundrum-waterfall-vs-agile-vs-lean)
 2. [The Triple Cost Constraint Paradigm](#2-the-triple-cost-constraint-paradigm)
-3. [Ecosystem Workflows & Backlog Refinement](https://www.google.com/search?q=%233-ecosystem-workflows--backlog-refinement)
-4. [User Story Crafting & Engineering Health](https://www.google.com/search?q=%234-user-story-crafting--engineering-health)
-5. [The Scrum Mechanics Deep Dive](https://www.google.com/search?q=%235-the-scrum-mechanics-deep-dive)
-6. [Why Scrum Fails: Pitfalls & Antipatterns](https://www.google.com/search?q=%236-why-scrum-fails-pitfalls--antipatterns)
-7. [The Kanban Method & Flow Systems](https://www.google.com/search?q=%237-the-kanban-method--flow-systems)
-8. [Scrumban (The Hybrid System)](https://www.google.com/search?q=%238-scrumban-the-hybrid-system)
-9. [Jira Software & Zenhub Architecture](https://www.google.com/search?q=%239-jira-software--zenhub-architecture)
-10. [Metrics, Health, and Value Tracking](https://www.google.com/search?q=%2310-metrics-health-and-value-tracking)
-11. [Enterprise Scaling I: Distributed Scrum & LeSS](https://www.google.com/search?q=%2311-enterprise-scaling-i-distributed-scrum--less)
-12. [Enterprise Scaling II: SAFe (Scaled Agile Framework)](https://www.google.com/search?q=%2312-enterprise-scaling-ii-safe-scaled-agile-framework)
-13. [Enterprise Scaling III: Disciplined Agile Delivery (DAD)](https://www.google.com/search?q=%2313-enterprise-scaling-iii-disciplined-agile-delivery-dad)
+3. [Ecosystem Workflows & Backlog Refinement](#3-ecosystem-workflows--backlog-refinement)
+4. [User Story Crafting & Engineering Health](#4-user-story-crafting--engineering-health)
+5. [The Scrum Mechanics Deep Dive](#5-the-scrum-mechanics-deep-dive)
+6. [Why Scrum Fails: Pitfalls & Antipatterns](#6-why-scrum-fails-pitfalls--antipatterns)
+7. [The Kanban Method & Flow Systems](#7-the-kanban-method--flow-systems)
+8. [Scrumban (The Hybrid System)](#8-scrumban-the-hybrid-system)
+9. [Jira Software & Zenhub Architecture](#9-jira-software--zenhub-architecture)
+10. [Metrics, Health, and Value Tracking](#10-metrics-health-and-value-tracking)
+11. [Enterprise Scaling I: Distributed Scrum & LeSS](#11-enterprise-scaling-i-distributed-scrum--less)
+12. [Enterprise Scaling II: SAFe (Scaled Agile Framework)](#12-enterprise-scaling-ii-safe-scaled-agile-framework)
+13. [Enterprise Scaling III: Disciplined Agile Delivery (DAD)](#13-enterprise-scaling-iii-disciplined-agile-delivery-dad)
 
 ---
 
