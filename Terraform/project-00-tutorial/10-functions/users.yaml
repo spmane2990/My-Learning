@@ -1,0 +1,5 @@
+users:
+  - name: Somnath
+    group: developers
+  - name: John
+    group: auditors
