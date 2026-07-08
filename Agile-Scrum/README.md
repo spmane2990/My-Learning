@@ -6,8 +6,8 @@ Welcome to the definitive reference manual for modern software delivery framewor
 
 ## Table of Contents
 
-1. [The Lifecycle Conundrum: Waterfall vs. Agile vs. Lean](https://www.google.com/search?q=%231-the-lifecycle-conundrum-waterfall-vs-agile-vs-lean)
-2. [The Triple Cost Constraint Paradigm](https://www.google.com/search?q=%232-the-triple-cost-constraint-paradigm)
+1. [The Lifecycle Conundrum: Waterfall vs. Agile vs. Lean](#1-the-lifecycle-conundrum-waterfall-vs-agile-vs-lean)
+2. [The Triple Cost Constraint Paradigm](#2-the-triple-cost-constraint-paradigm)
 3. [Ecosystem Workflows & Backlog Refinement](https://www.google.com/search?q=%233-ecosystem-workflows--backlog-refinement)
 4. [User Story Crafting & Engineering Health](https://www.google.com/search?q=%234-user-story-crafting--engineering-health)
 5. [The Scrum Mechanics Deep Dive](https://www.google.com/search?q=%235-the-scrum-mechanics-deep-dive)
