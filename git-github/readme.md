@@ -1,6 +1,3 @@
-Here is the enhanced version of the documentation. Every command block now includes a deeply detailed comments section directly preceding or inline with the execution pattern, providing exact architectural context, behavioral consequences, edge-case risks, and practical usage tips.
-
-All lines have been carefully engineered to fit within standard viewport widths to prevent any horizontal scroll bars.
 
 ---
 
