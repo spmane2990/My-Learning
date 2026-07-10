@@ -1,3 +1,6 @@
+An updated, clean version of the `README.md` text has been regenerated to eliminate the minor visual artifacts and OCR errors (such as mismatched markdown elements or stray bracket syntax) present in the initial draft.
+
+```markdown
 # Mastering Terraform: Comprehensive Reference Guide
 
 This document provides a highly detailed summary of the core concepts, architecture, and best practices covered in the _Mastering Terraform_ presentation slides. It serves as an introductory and advanced reference for managing Infrastructure as Code (IaC) using HashiCorp Terraform.
@@ -28,7 +31,6 @@ This document provides a highly detailed summary of the core concepts, architect
 - [cite_start]**Error-Prone:** High probability of configuration errors and manual slip-ups[cite: 19].
 
 [cite_start]**Infrastructure as Code (IaC)** solves this by allowing teams to provision and manage infrastructure using human-readable configuration files instead of manual steps[cite: 5, 12].
-
 ```
 
 [ Teams ] ---> [ Declarative Code ] ---> [ IaC Tool ] ---> [ Target Infrastructure ]
@@ -40,10 +42,9 @@ This document provides a highly detailed summary of the core concepts, architect
 ```
 
 ### Key Paradigms of IaC:
-
-- [cite_start]**Declarative Philosophy:** You define _what_ the infrastructure should look like, and the tool deduces the steps to achieve that state[cite: 23].
-- [cite_start]**Version Controlled:** Infrastructure code can live inside modern repositories, enabling change tracking and peer reviews[cite: 21].
-- [cite_start]**CI/CD Driven:** Infrastructure updates run safely inside automated continuous integration and deployment environments[cite: 20].
+* [cite_start]**Declarative Philosophy:** You define *what* the infrastructure should look like, and the tool deduces the steps to achieve that state[cite: 23].
+* [cite_start]**Version Controlled:** Infrastructure code can live inside modern repositories, enabling change tracking and peer reviews[cite: 21].
+* [cite_start]**CI/CD Driven:** Infrastructure updates run safely inside automated continuous integration and deployment environments[cite: 20].
 
 ---
 
@@ -51,12 +52,12 @@ This document provides a highly detailed summary of the core concepts, architect
 
 [cite_start]Implementing IaC yields significant operational advantages across several key vectors[cite: 31]:
 
-- [cite_start]**Better Cost Management:** Easily spin up complex environments when needed and destroy them instantly when idle[cite: 53]. [cite_start]It gives an immediate overview of all active resources created by a project[cite: 56].
-- [cite_start]**Improved Reliability & Consistency:** Well-developed tools guarantee a consistent behavior[cite: 75]. [cite_start]Environments remain structurally identical across deployments[cite: 87].
-- [cite_start]**Accelerated Deployment Processes:** Automation saves time and effort[cite: 104]. [cite_start]The tool validates configurations upfront [cite: 77] [cite_start]and detects configuration drifts automatically[cite: 105].
-- [cite_start]**Fewer Human Errors:** Planning stages allow engineers to preview exactly what changes are expected before execution [cite: 122][cite_start], while custom rules protect against accidental deletion of critical resources[cite: 125].
-- [cite_start]**Enhanced Security Strategies:** Configuration files can be inspected by security software for vulnerabilities[cite: 141]. [cite_start]Security strategies, including IAM users, roles, and respective policies, can be configured directly via IaC[cite: 140].
-- [cite_start]**Self-Documenting Infrastructure:** The created infrastructure matches exactly what is documented in the code [cite: 157][cite_start], supplemented by detailed execution logs[cite: 159].
+* [cite_start]**Better Cost Management:** Easily spin up complex environments when needed and destroy them instantly when idle[cite: 53]. [cite_start]It gives an immediate overview of all active resources created by a project[cite: 56].
+* [cite_start]**Improved Reliability & Consistency:** Well-developed tools guarantee a consistent behavior[cite: 75]. [cite_start]Environments remain structurally identical across deployments[cite: 87].
+* [cite_start]**Accelerated Deployment Processes:** Automation saves time and effort[cite: 104]. [cite_start]The tool validates configurations upfront [cite: 77] [cite_start]and detects configuration drifts automatically[cite: 105].
+* [cite_start]**Fewer Human Errors:** Planning stages allow engineers to preview exactly what changes are expected before execution [cite: 122][cite_start], while custom rules protect against accidental deletion of critical resources[cite: 125].
+* [cite_start]**Enhanced Security Strategies:** Configuration files can be inspected by security software for vulnerabilities[cite: 141]. [cite_start]Security strategies, including IAM users, roles, and respective policies, can be configured directly via IaC[cite: 140].
+* [cite_start]**Self-Documenting Infrastructure:** The created infrastructure matches exactly what is documented in the code [cite: 157][cite_start], supplemented by detailed execution logs[cite: 159].
 
 ---
 
@@ -64,18 +65,19 @@ This document provides a highly detailed summary of the core concepts, architect
 
 [cite_start]Among various IaC options, Terraform offers unique features that make it the industry standard[cite: 163, 166]:
 
-- [cite_start]**Platform-Agnostic:** It can be used with multiple providers, both in the cloud and on-premises[cite: 167, 168].
-- [cite_start]**High-Level Abstraction:** A uniform grammar manages resources across multiple distinct providers[cite: 169, 170].
-- [cite_start]**Modular Approach:** Groups of resources can form cohesive components that can be combined and composed to build bigger solutions[cite: 171, 172].
-- [cite_start]**Parallel Deployment:** Terraform analyzes resources to build a dependency graph, executing unrelated changes in parallel to optimize execution time[cite: 173, 174].
-- [cite_start]**Separation of Plan and Apply:** Allows engineers to execute dry runs to safely inspect potential changes before actually applying them[cite: 175, 176].
-- [cite_start]**State File Snapshots:** Extremely fast due to its implementation of a state file, which saves the entire snapshot of the current deployment[cite: 179, 180].
+* [cite_start]**Platform-Agnostic:** It can be used with multiple providers, both in the cloud and on-premises[cite: 167, 168].
+* [cite_start]**High-Level Abstraction:** A uniform grammar manages resources across multiple distinct providers[cite: 169, 170].
+* [cite_start]**Modular Approach:** Groups of resources can form cohesive components that can be combined and composed to build bigger solutions[cite: 171, 172].
+* [cite_start]**Parallel Deployment:** Terraform analyzes resources to build a dependency graph, executing unrelated changes in parallel to optimize execution time[cite: 173, 174].
+* [cite_start]**Separation of Plan and Apply:** Allows engineers to execute dry runs to safely inspect potential changes before actually applying them[cite: 175, 176].
+* [cite_start]**State File Snapshots:** Extremely fast due to its implementation of a state file, which saves the entire snapshot of the current deployment[cite: 179, 180].
 
 ---
 
 ## 4. Terraform Architecture & Lifecycle
 
 [cite_start]Terraform's internal architecture is split into two primary components: **Terraform Core** and **Providers**[cite: 184, 193].
+
 
 ```
 
@@ -91,15 +93,14 @@ This document provides a highly detailed summary of the core concepts, architect
 | +-----------------------+ | | +-----------------+ |
 +-------------------------------------------------------+ +-----------------------+
 
-```
+````
 
-- [cite_start]**Terraform Core:** The central engine that reads configurations, manages the state engine, and builds the execution dependency graph[cite: 174, 218].
-- [cite_start]**Providers:** Dynamic plugins mapping Core commands to upstream remote APIs[cite: 188]. [cite_start]Providers supply the translation logic to read, create, update, and delete resources through target platform APIs[cite: 189, 190]. [cite_start]Anyone can build and publish a provider adhering to Terraform's specifications[cite: 191].
+* [cite_start]**Terraform Core:** The central engine that reads configurations, manages the state engine, and builds the execution dependency graph[cite: 174, 218].
+* [cite_start]**Providers:** Dynamic plugins mapping Core commands to upstream remote APIs[cite: 188]. [cite_start]Providers supply the translation logic to read, create, update, and delete resources through target platform APIs[cite: 189, 190]. [cite_start]Anyone can build and publish a provider adhering to Terraform's specifications[cite: 191].
 
 ### The Lifecycle Workflows
 
 [cite_start]The infrastructure management process relies on three key operational commands[cite: 209]:
-
 1. [cite_start]**`terraform plan`:** Terraform reads configuration files and the active state file, calls cloud provider APIs to check the current state of real-world objects, and synthesizes a precise plan of action[cite: 210, 224].
 2. [cite_start]**`terraform apply`:** Executes the generated plan via the provider plugins, interacting with remote target APIs to create, modify, or delete real-world objects, and updates the state file[cite: 225, 232].
 3. [cite_start]**`terraform destroy`:** Permanently purges all tracked real-world objects listed within the state engine file[cite: 235, 239].
@@ -109,7 +110,6 @@ This document provides a highly detailed summary of the core concepts, architect
 ## 5. Core Structural Components
 
 ### A. The Terraform Block
-
 [cite_start]Configures overall project behavior[cite: 242, 244]. [cite_start]It is strictly constrained to hold only constant values—no input variable references or dynamic resource references are permitted inside this block[cite: 246]. [cite_start]It handles backend storage configurations, minimum core versions, and provider definitions[cite: 245].
 
 ```hcl
@@ -130,7 +130,7 @@ terraform {
   }
 }
 
-```
+````
 
 Version Constraint Cheatsheet:
 
