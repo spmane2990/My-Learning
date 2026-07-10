@@ -379,28 +379,12 @@ Terraform Cloud moves execution from local workstations into a managed, secure r
 
 Comparative Workflow Archetypes
 
-| Lifecycle Attribute     | Local CLI Workspace Execution | HashiCorp Terraform Cloud |
-| ----------------------- | ----------------------------- | ------------------------- |
-| **Configuration Files** | Saved locally on disk.        |
-
-| Tracked in Version Control Systems (VCS) or API/CLI.
-
-|
-| **Input Variables** | Passed via `.tfvars` files, CLI arguments, or prompts.
-
-| Saved directly within the workspace UI.
-
-|
-| **State Files** | Kept on a local disk or shared in remote backends.
-
-| Secured within the workspace natively.
-
-|
-| **Secrets Management** | Handled via local environment variables or prompts.
-
-| Saved securely in encrypted workspace variables.
-
-|
+| Lifecycle Attribute     | Local CLI Workspace Execution                          | HashiCorp Terraform Cloud                            |
+| ----------------------- | ------------------------------------------------------ | ---------------------------------------------------- |
+| **Configuration Files** | Saved locally on disk.                                 | Tracked in Version Control Systems (VCS) or API/CLI. |
+| **Input Variables**     | Passed via `.tfvars` files, CLI arguments, or prompts. | Saved directly within the workspace UI.              |
+| **State Files**         | Kept on a local disk or shared in remote backends.     | Secured within the workspace natively.               |
+| **Secrets Management**  | Handled via local environment variables or prompts.    | Saved securely in encrypted workspace variables.     |
 
 #### Supported Workflows:
 
