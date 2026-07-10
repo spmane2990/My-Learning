@@ -20,14 +20,14 @@ This document provides a highly detailed summary of the core concepts, architect
 
 ## 1. What is Infrastructure as Code (IaC)?
 
-Traditionally, creating infrastructure involved manually setting up components via web consoles or individual Command Line Interface (CLI) commands[cite: 5, 7]. This approach suffers from several prominent drawbacks:
+Traditionally, creating infrastructure involved manually setting up components via web consoles or individual Command Line Interface (CLI) commands. This approach suffers from several prominent drawbacks:
 
-- **Hard to Reproduce:** Replicating a large infrastructure across multiple environments manually is highly challenging[cite: 16].
-- **Lack of Auditability:** Reverting or tracking configuration changes over time is difficult[cite: 17].
-- **Imperative Nature:** Forcing engineers to specify step-by-step procedures instead of describing the desired end state[cite: 18].
-- **Error-Prone:** High probability of configuration errors and manual slip-ups[cite: 19].
+- **Hard to Reproduce:** Replicating a large infrastructure across multiple environments manually is highly challenging.
+- **Lack of Auditability:** Reverting or tracking configuration changes over time is difficult.
+- **Imperative Nature:** Forcing engineers to specify step-by-step procedures instead of describing the desired end state.
+- **Error-Prone:** High probability of configuration errors and manual slip-ups.
 
-**Infrastructure as Code (IaC)** solves this by allowing teams to provision and manage infrastructure using human-readable configuration files instead of manual steps[cite: 5, 12].
+**Infrastructure as Code (IaC)** solves this by allowing teams to provision and manage infrastructure using human-readable configuration files instead of manual steps.
 
 ```
 
@@ -41,68 +41,68 @@ Traditionally, creating infrastructure involved manually setting up components v
 
 ### Key Paradigms of IaC:
 
-- **Declarative Philosophy:** You define _what_ the infrastructure should look like, and the tool deduces the steps to achieve that state[cite: 23].
-- **Version Controlled:** Infrastructure code can live inside modern repositories, enabling change tracking and peer reviews[cite: 21].
-- **CI/CD Driven:** Infrastructure updates run safely inside automated continuous integration and deployment environments[cite: 20].
+- **Declarative Philosophy:** You define _what_ the infrastructure should look like, and the tool deduces the steps to achieve that state.
+- **Version Controlled:** Infrastructure code can live inside modern repositories, enabling change tracking and peer reviews.
+- **CI/CD Driven:** Infrastructure updates run safely inside automated continuous integration and deployment environments.
 
 ---
 
 ## 2. Benefits of Infrastructure as Code
 
-Implementing IaC yields significant operational advantages across several key vectors[cite: 31]:
+Implementing IaC yields significant operational advantages across several key vectors:
 
-- **Better Cost Management:** Easily spin up complex environments when needed and destroy them instantly when idle[cite: 53]. It gives an immediate overview of all active resources created by a project[cite: 56].
-- **Improved Reliability & Consistency:** Well-developed tools guarantee a consistent behavior[cite: 75]. Environments remain structurally identical across deployments[cite: 87].
-- **Accelerated Deployment Processes:** Automation saves time and effort[cite: 104]. The tool validates configurations upfront [cite: 77] and detects configuration drifts automatically[cite: 105].
-- **Fewer Human Errors:** Planning stages allow engineers to preview exactly what changes are expected before execution [cite: 122], while custom rules protect against accidental deletion of critical resources[cite: 125].
-- **Enhanced Security Strategies:** Configuration files can be inspected by security software for vulnerabilities[cite: 141]. Security strategies, including IAM users, roles, and respective policies, can be configured directly via IaC[cite: 140].
-- **Self-Documenting Infrastructure:** The created infrastructure matches exactly what is documented in the code [cite: 157], supplemented by detailed execution logs[cite: 159].
+- **Better Cost Management:** Easily spin up complex environments when needed and destroy them instantly when idle. It gives an immediate overview of all active resources created by a project.
+- **Improved Reliability & Consistency:** Well-developed tools guarantee a consistent behavior. Environments remain structurally identical across deployments.
+- **Accelerated Deployment Processes:** Automation saves time and effort. The tool validates configurations upfront  and detects configuration drifts automatically.
+- **Fewer Human Errors:** Planning stages allow engineers to preview exactly what changes are expected before execution , while custom rules protect against accidental deletion of critical resources.
+- **Enhanced Security Strategies:** Configuration files can be inspected by security software for vulnerabilities. Security strategies, including IAM users, roles, and respective policies, can be configured directly via IaC.
+- **Self-Documenting Infrastructure:** The created infrastructure matches exactly what is documented in the code , supplemented by detailed execution logs.
 
 ---
 
 ## 3. Why Terraform?
 
-Among various IaC options, Terraform offers unique features that make it the industry standard[cite: 163, 166]:
+Among various IaC options, Terraform offers unique features that make it the industry standard:
 
-- **Platform-Agnostic:** It can be used with multiple providers, both in the cloud and on-premises[cite: 167, 168].
-- **High-Level Abstraction:** A uniform grammar manages resources across multiple distinct providers[cite: 169, 170].
-- **Modular Approach:** Groups of resources can form cohesive components that can be combined and composed to build bigger solutions[cite: 171, 172].
-- **Parallel Deployment:** Terraform analyzes resources to build a dependency graph, executing unrelated changes in parallel to optimize execution time[cite: 173, 174].
-- **Separation of Plan and Apply:** Allows engineers to execute dry runs to safely inspect potential changes before actually applying them[cite: 175, 176].
-- **State File Snapshots:** Extremely fast due to its implementation of a state file, which saves the entire snapshot of the current deployment[cite: 179, 180].
+- **Platform-Agnostic:** It can be used with multiple providers, both in the cloud and on-premises.
+- **High-Level Abstraction:** A uniform grammar manages resources across multiple distinct providers.
+- **Modular Approach:** Groups of resources can form cohesive components that can be combined and composed to build bigger solutions.
+- **Parallel Deployment:** Terraform analyzes resources to build a dependency graph, executing unrelated changes in parallel to optimize execution time.
+- **Separation of Plan and Apply:** Allows engineers to execute dry runs to safely inspect potential changes before actually applying them.
+- **State File Snapshots:** Extremely fast due to its implementation of a state file, which saves the entire snapshot of the current deployment.
 
 ---
 
 ## 4. Terraform Architecture & Lifecycle
 
-Terraform's internal architecture is split into two primary components: **Terraform Core** and **Providers**[cite: 184, 193].
+Terraform's internal architecture is split into two primary components: **Terraform Core** and **Providers**.
 
 ```
-
-+-------------------------------------------------------+ +-----------------------+
-| TERRAFORM ECOSYSTEM | | REMOTE APIS |
-| | | |
-| +----------------+ +-----------------------+ | | +-----------------+ |
-| | |------->| AWS Provider |==> | AWS API | |
-| | Terraform | +-----------------------+ | | +-----------------+ |
-| | Core |------->| Google Cloud Provider |==> | Google Cloud API| |
-| | | +-----------------------+ | | +-----------------+ |
-| +----------------+------->| Azure Provider |==========> | Azure API | |
-| +-----------------------+ | | +-----------------+ |
-+-------------------------------------------------------+ +-----------------------+
-
++-------------------------------------------------------+   +-----------------------+
+|                TERRAFORM ECOSYSTEM                    |   |      REMOTE APIS      |
+|                                                       |   |                       |
+|  +----------------+   +-----------------------+       |   |  +-----------------+  |
+|  | Terraform Core |-->|  AWS Provider         |------>|   |  |   AWS API       |  |
+|  +----------------+   +-----------------------+       |   |  +-----------------+  |
+|                       +-----------------------+       |   |  +-----------------+  |
+|                       |  Google Cloud Provider|------>|   |  | Google Cloud API |  |
+|                       +-----------------------+       |   |  +-----------------+  |
+|                       +-----------------------+       |   |  +-----------------+  |
+|                       |  Azure Provider       |------>|   |  |   Azure API      |  |
+|                       +-----------------------+       |   |  +-----------------+  |
++-------------------------------------------------------+   +-----------------------+
 ```
 
-- **Terraform Core:** The central engine that reads configurations, manages the state engine, and builds the execution dependency graph[cite: 174, 218].
-- **Providers:** Dynamic plugins mapping Core commands to upstream remote APIs[cite: 188]. Providers supply the translation logic to read, create, update, and delete resources through target platform APIs[cite: 189, 190]. Anyone can build and publish a provider adhering to Terraform's specifications[cite: 191].
+- **Terraform Core:** The central engine that reads configurations, manages the state engine, and builds the execution dependency graph.
+- **Providers:** Dynamic plugins mapping Core commands to upstream remote APIs. Providers supply the translation logic to read, create, update, and delete resources through target platform APIs. Anyone can build and publish a provider adhering to Terraform's specifications.
 
 ### The Lifecycle Workflows
 
-The infrastructure management process relies on three key operational commands[cite: 209]:
+The infrastructure management process relies on three key operational commands:
 
-1. **`terraform plan`:** Terraform reads configuration files and the active state file, calls cloud provider APIs to check the current state of real-world objects, and synthesizes a precise plan of action[cite: 210, 224].
-2. **`terraform apply`:** Executes the generated plan via the provider plugins, interacting with remote target APIs to create, modify, or delete real-world objects, and updates the state file[cite: 225, 232].
-3. **`terraform destroy`:** Permanently purges all tracked real-world objects listed within the state engine file[cite: 235, 239].
+1. **`terraform plan`:** Terraform reads configuration files and the active state file, calls cloud provider APIs to check the current state of real-world objects, and synthesizes a precise plan of action.
+2. **`terraform apply`:** Executes the generated plan via the provider plugins, interacting with remote target APIs to create, modify, or delete real-world objects, and updates the state file.
+3. **`terraform destroy`:** Permanently purges all tracked real-world objects listed within the state engine file.
 
 ---
 
@@ -110,7 +110,7 @@ The infrastructure management process relies on three key operational commands[c
 
 ### A. The Terraform Block
 
-Configures overall project behavior[cite: 242, 244]. It is strictly constrained to hold only constant values—no input variable references or dynamic resource references are permitted inside this block[cite: 246]. It handles backend storage configurations, minimum core versions, and provider definitions[cite: 245].
+Configures overall project behavior. It is strictly constrained to hold only constant values—no input variable references or dynamic resource references are permitted inside this block. It handles backend storage configurations, minimum core versions, and provider definitions.
 
 ```hcl
 terraform {
