@@ -226,17 +226,9 @@ If an operation on an upstream resource fails, downstream dependent operations a
 | Meta-Argument | Operational Description                                                 |
 | ------------- | ----------------------------------------------------------------------- |
 | `count`       | Creates a specific number of instances based on an integer index value. |
-
-|
-| `for_each` | Accepts a map or set of strings, populating unique instances per entry.
-
-|
-| `provider` | Explicitly passes a non-default configured provider plugin instance.
-
-|
-| `depends_on` | Forces a hard sequential ordering constraint on creation/deletion.
-
-|
+| `for_each`    | Accepts a map or set of strings, populating unique instances per entry. |
+| `provider`    | Explicitly passes a non-default configured provider plugin instance.    |
+| `depends_on`  | Forces a hard sequential ordering constraint on creation/deletion.      |
 
 ### Resource Lifecycle Meta-Arguments
 
