@@ -19,6 +19,16 @@ Welcome to the definitive reference manual for modern software delivery framewor
 11. [Enterprise Scaling I: Distributed Scrum & LeSS](#11-enterprise-scaling-i-distributed-scrum--less)
 12. [Enterprise Scaling II: SAFe (Scaled Agile Framework)](#12-enterprise-scaling-ii-safe-scaled-agile-framework)
 13. [Enterprise Scaling III: Disciplined Agile Delivery (DAD)](#13-enterprise-scaling-iii-disciplined-agile-delivery-dad)
+14. [Project Baseline Management: WBS, IMS, Budget & Variance Analysis](#14-project-baseline-management-wbs-ims-budget--variance-analysis)
+15. [RAID Review & Change Control Board (CCB)](#15-raid-review--change-control-board-ccb)
+16. [Framework Selection Guide for Agile Tasks: COSTAR, RISE, RTF](#16-framework-selection-guide-for-agile-tasks-costar-rise-rtf)
+17. [Advanced Requirements & User Stories: From Ideas to Actionable Items](#17-advanced-requirements--user-stories-from-ideas-to-actionable-items)
+18. [Agile AI Quality Assurance Framework](#18-agile-ai-quality-assurance-framework)
+19. [AI-Assisted Prioritization & Estimation](#19-ai-assisted-prioritization--estimation)
+20. [Enhanced Sprint Planning & Management](#20-enhanced-sprint-planning--management)
+21. [Burndown Planning & Tracking](#21-burndown-planning--tracking)
+22. [Key Metrics & Trending Analysis](#22-key-metrics--trending-analysis)
+23. [Business-Level Reviews: QBR & MBR](#23-business-level-reviews-qbr--mbr)
 
 ---
 
