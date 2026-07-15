@@ -358,3 +358,144 @@ These triangles appear constantly in geometry and trigonometry because their sid
 
 $$\text{If } D \text{ and } E \text{ are midpoints, then } DE \parallel BC \text{ and } DE = \frac{1}{2}BC$$
 
+
+## 11. Quadrilaterals & Polygons
+
+### Types of Quadrilaterals & Properties
+
+* **Trapezoid:** A quadrilateral with at least one pair of parallel sides (called bases).
+* *Isosceles Trapezoid:* Non-parallel sides (legs) are equal; base angles are equal.
+
+
+* **Kite:** A quadrilateral with two distinct pairs of adjacent, equal sides.
+* Diagonals intersect at a perfect $90^\circ$ angle; the main diagonal bisects the other.
+
+
+* **Parallelogram:** Both pairs of opposite sides are parallel and equal in length.
+* Opposite angles are equal; consecutive angles are supplementary ($180^\circ$). Diagonals bisect each other.
+
+
+* **Rectangle:** A specialized parallelogram with four $90^\circ$ right angles.
+* Diagonals are congruent (equal in length).
+
+
+* **Square:** A regular quadrilateral. It is simultaneously a rectangle and a rhombus.
+* Four equal sides and four $90^\circ$ right angles. Diagonals are equal, perpendicular, and bisect each other.
+
+
+
+### Polygons & Perimeter
+
+* **Polygon:** A closed 2D plane figure bounded by three or more straight line segments.
+* **Perimeter Formulas:**
+* **General Polygon:** Sum of all outer side lengths ($P = s_1 + s_2 + \dots + s_n$).
+* **Regular Polygon:** $P = n \times s$ (where $n$ is the number of sides, and $s$ is the side length).
+
+
+
+![Quadrilaterals, Polygons, and 3D Shape Formulas](./images/03_geometry-solids-formulas.png)
+
+## 12. 2D Area & Circle Formulas
+
+### 2D Area Formulas
+
+* **Square:** $A = s^2$ *(where $s$ = side length)*
+* **Rectangle:** $A = l \times w$ *(where $l$ = length, $w$ = width)*
+* **Parallelogram:** $A = b \times h$ *(where $b$ = base, $h$ = perpendicular height)*
+* **Trapezoid:** $A = \frac{1}{2}(a + b)h$ *(where $a, b$ = parallel bases, $h$ = height)*
+
+### Circle Formulas
+
+* **Circumference ($C$):** The perimeter of a circle.
+
+$$C = 2\pi r = \pi d$$
+
+
+* **Area ($A$):** The total space enclosed inside the boundary.
+
+$$A = \pi r^2$$
+
+
+
+*(where $r$ = radius, $d$ = diameter $= 2r$)*
+
+---
+
+## 13. 3D Polyhedra & Solids
+
+### Definitions
+
+* **Polyhedron (plural: Polyhedra):** A 3D solid bounded by flat polygonal faces.
+* **Faces:** The flat polygon surfaces.
+* **Edges:** The line segments where two faces meet.
+* **Vertices:** The corner points where three or more edges intersect.
+
+
+* **Euler's Formula:** For any convex polyhedron:
+
+$$F + V - E = 2$$
+
+
+
+*(where $F$ = Faces, $V$ = Vertices, $E$ = Edges)*
+
+### Solid Classifications
+
+* **Prism:** A polyhedron with two identical, parallel polygonal bases. Sides are rectangles.
+* *Rectangular Prism:* Bases are rectangles (6 faces, 8 vertices, 12 edges).
+* *Pentagonal Prism:* Bases are pentagons (7 faces, 10 vertices, 15 edges).
+* *Hexagonal Prism:* Bases are hexagons (8 faces, 12 vertices, 18 edges).
+
+
+* **Pyramid:** A polyhedron formed by connecting a polygonal base to a single top point (apex). Sides are triangles.
+* *Square Pyramid:* Base is a square (5 faces, 5 vertices, 8 edges).
+* *Triangular Pyramid (Tetrahedron):* Base is a triangle (4 faces, 4 vertices, 6 edges).
+
+
+* **Non-Polyhedra (Curved Solids):**
+* **Cylinder:** Features two parallel circular bases connected by a smooth, curved surface.
+* **Cone:** Features a circular base tapering smoothly to an apex point. *Not a polyhedron because it has a curved surface.*
+* **Sphere:** A perfectly round 3D surface where all points are equidistant from the center.
+
+
+
+---
+
+## 14. Surface Area (SA) Formulas
+
+Total Surface Area accounts for the sum of all flat faces and curved exterior regions.
+
+* **Rectangular Prism:** $SA = 2(lw + lh + wh)$
+* **Square Pyramid:** $SA = \text{Base Area} + \text{Lateral Area} = s^2 + 2s\ell$
+*(where $s$ = base side length, $\ell$ = slant height of the triangular face)*
+* **Cylinder:** $SA = 2\pi r^2 + 2\pi rh$
+*(where $2\pi r^2$ represents the two circular bases; $2\pi rh$ represents the unrolled rectangular lateral side)*
+* **Cone:** $SA = \pi r^2 + \pi r\ell$
+*(where $\ell$ = slant height $= \sqrt{r^2 + h^2}$)*
+* **Sphere:** $SA = 4\pi r^2$
+
+---
+
+## 15. Volume (V) Formulas
+
+> 💡 **Universal Prism/Cylinder Rule:** The volume for **any** uniform prism or cylinder is always the **Area of the Base ($B$) multiplied by the perpendicular height ($h$)**:
+> $$V = B \times h$$
+> 
+> 
+
+* **Rectangular Prism:** $V = l \times w \times h$  *(Base area $B = lw$)*
+* **Cube:** $V = s^3$
+* **Cylinder:** $V = \pi r^2 h$ *(Base area $B = \pi r^2$)*
+
+> 💡 **Universal Pyramid/Cone Rule:** The volume of a pyramid or cone is exactly **$\frac{1}{3}$** of the volume of its corresponding prism/cylinder with the same base and height:
+> $$V = \frac{1}{3} \times B \times h$$
+> 
+> 
+
+* **Pyramid:** $V = \frac{1}{3} \times \text{Base Area} \times h$
+* **Cone:** $V = \frac{1}{3}\pi r^2 h$
+* **Sphere:** $V = \frac{4}{3}\pi r^3$
+
+---
+
+Whenever you are ready, drop the next set of math topics below.
