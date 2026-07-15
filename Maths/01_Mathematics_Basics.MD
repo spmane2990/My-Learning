@@ -498,4 +498,112 @@ Total Surface Area accounts for the sum of all flat faces and curved exterior re
 
 ---
 
-Whenever you are ready, drop the next set of math topics below.
+## 16. Functions: Foundations & Graphical Tests
+
+### Definitions & Core Properties
+
+A **function** is a relation where each input element ($x$) from the **domain** maps to exactly one output element ($y$) in the **codomain**.
+
+* **Domain:** The set of all valid, real inputs ($x$) for which the function is defined.
+* **Range:** The set of all actual outputs ($y$) produced by the function.
+* **Zeros (Roots/Intercepts):** The input values where $f(x) = 0$. Graphically, these are the $x$-intercepts.
+
+### The Graphical Tests
+
+* **Horizontal Line Test (HLT):** If *any* horizontal line passes through a function's graph more than once, the function is **not** one-to-one (injective) and lacks a true inverse function.
+* **Vertical Line Test (VLT):** If *any* vertical line passes through a graph more than once, the relation is **not** a function.
+
+---
+
+## 17. Asymptotes & Domain Behavior
+
+### Asymptotes
+
+An **asymptote** is a line that the graph approaches arbitrarily closely but generally does not cross as the variables head toward extreme boundaries.
+
+* **Vertical Asymptote (VA):** Occurs where the denominator equals zero (and cannot be cancelled out). $x \to c, \, f(x) \to \pm\infty$.
+* **Horizontal Asymptote (HA):** Dictates end behavior as $x \to \pm\infty$.
+
+### Algebraic Domain Manipulation Rule
+
+> ⚠️ **The Domain Continuity Rule:** When adding, subtracting, or multiplying functions algebraically, the new domain is the **intersection** of the individual domains. **Except during division**, where you must explicitly exclude any input values that make the divisor function equal to zero.
+
+* **Example:** Let $f(x) = \sqrt{x}$ (Domain: $[0, \infty)$) and $g(x) = x - 3$ (Domain: $(-\infty, \infty)$).
+* The domain of $f(x) \cdot g(x)$ remains $[0, \infty)$.
+* The domain of $\frac{f(x)}{g(x)} = \frac{\sqrt{x}}{x - 3}$ narrows to $[0, 3) \cup (3, \infty)$ because $x = 3$ yields division by zero.
+
+
+
+### Composite Functions
+
+A composite function passes an input through one function, then passes that output directly into a second function: $(f \circ g)(x) = f(g(x))$.
+
+* **Composite Domain Requirement:** The input $x$ must lie within the domain of $g(x)$, and the resulting value $g(x)$ must fit within the domain of $f(x)$.
+
+---
+
+## 18. Parent Functions & Power Behaviors
+
+### Core Parent Shapes
+
+| Function | Type | Domain | Range | Asymptotes / Key Features |
+| --- | --- | --- | --- | --- |
+| $f(x) = x^2$ | Even Power | $(-\infty, \infty)$ | $[0, \infty)$ | Vertex at $(0,0)$; symmetric over $y$-axis. |
+| $f(x) = x^4$ | Even Power | $(-\infty, \infty)$ | $[0, \infty)$ | Flatter base near zero, steeper walls than $x^2$. |
+| $f(x) = \frac{1}{x}$ | Rational | $x \neq 0$ | $y \neq 0$ | VA: $x = 0$, HA: $y = 0$. Hyperbola shape. |
+
+### Power Functions Rule ($x^n$)
+
+For single-term polynomials $f(x) = x^n$:
+
+* **If $n$ is Even ($x^2, x^4, x^6$):** The graph resembles a **U-shaped parabola**. Both ends shoot in the same vertical direction ($\infty$).
+* *Range:* Bound on one side (e.g., $[0, \infty)$ if the leading coefficient is positive).
+
+
+* **If $n$ is Odd ($x^3, x^5, x^7$):** The graph resembles an **S-shaped curve**. The ends shoot in opposite directions.
+* *Range:* Fully unbounded, $(-\infty, \infty)$.
+
+![Functions Definitions, Behaviors, and Transformations Grid](./images/function-analysis-grid.png)
+
+---
+
+## 19. Extrema & Continuity
+
+### Relative Maxima and Minima (Hills and Valleys)
+
+* **Relative Maxima (Hills):** A point $(c, f(c))$ where $f(c) \ge f(x)$ for all nearby values of $x$. The function shifts from increasing to decreasing.
+* **Relative Minima (Valleys):** A point $(c, f(c))$ where $f(c) \le f(x)$ for all nearby values of $x$. The function shifts from decreasing to increasing.
+
+### Discontinuous Functions
+
+A function is discontinuous if its graph has gaps, breaks, or jumps. The three primary types are:
+
+1. **Removable (Hole):** The graph has a single missing point where a common factor cancels out algebraically.
+2. **Infinite (Asymptote):** The graph breaks and races toward $\pm\infty$ along a vertical line.
+3. **Jump:** The graph breaks cleanly and resumes at a completely different $y$-value (common in piecewise functions).
+
+---
+
+## 20. Comprehensive Graph Transformations
+
+Any modified parent function can be structurally analyzed using the standard transformation template:
+
+
+$$f(x) = a \cdot g\big(b(x - h)\big) + k$$
+
+### Transformation Operational Grid
+
+| Term | Parameter Scope | Graphical Transformation Effect |
+| --- | --- | --- |
+| **$a$** | $a > 1$ | Vertical stretch (stretches graph away from $x$-axis). |
+|  | $0 < a < 1$ | Vertical compression/shrink (flattens graph toward $x$-axis). |
+|  | $a < 0$ (Negative) | **Reflection across the $x$-axis** (flips upside down). |
+| **$b$** | $b > 1$ | Horizontal compression/shrink (squeezes graph inward toward $y$-axis). |
+|  | $0 < b < 1$ | Horizontal stretch (pulls graph outward away from $y$-axis). |
+|  | $b < 0$ (Negative) | **Reflection across the $y$-axis** (flips left-to-right). |
+| **$h$** | $h > 0$ *(e.g., $x - 3$)* | **Horizontal shift right** by $h$ units. |
+|  | $h < 0$ *(e.g., $x + 3$)* | **Horizontal shift left** by $\vert h \vert$ units. |
+| **$k$** | $k > 0$ | **Vertical shift up** by $k$ units. |
+|  | $k < 0$ | **Vertical shift down** by $\vert k \vert$ units. |
+
+---
