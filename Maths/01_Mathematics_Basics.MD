@@ -241,7 +241,7 @@ $$\vert{}x\vert{} = \begin{cases} x & \text{if } x \ge 0 \\ -x & \text{if } x < 
 * **Plane (2D):** A flat, continuous surface stretching infinitely in length and width.
 * **Space (3D):** The three-dimensional bounding region containing all volume.
 
-![Basic Angle Relationships and Parallel Lines](./images/geometry-angles.png)
+![Basic Angle Relationships and Parallel Lines](./images/01_geometry-angles.png)
 
 ### Core Angle Relationships
 
@@ -263,6 +263,100 @@ $$\vert{}x\vert{} = \begin{cases} x & \text{if } x \ge 0 \\ -x & \text{if } x < 
 * **Right Triangle:** Contains exactly one internal angle equal to $90^\circ$.
 * **Obtuse Triangle:** Contains exactly one internal angle greater than $90^\circ$.
 
+![Triangle Properties, Centers, and Theorems](./images/02_triangle-theorems.png)
+
+## 7. Triangle Classifications & Theorems
+
+### Triangle Classifications (By Side/Angle Relationships)
+
+* **Scalene Triangle:** All three sides have different lengths; all three interior angles are distinct.
+* **Isosceles Triangle:** At least two sides are equal in length. The angles opposite those equal sides (base angles) are also equal.
+* **Equilateral Triangle:** All three sides are equal. All three interior angles are exactly $60^\circ$. It is a regular polygon.
+
+### Congruence vs. Similarity
+
+* **Congruence ($\cong$):** Triangles are identical in both **shape and size**. Corresponding sides are equal, and corresponding angles are equal.
+* *Criteria:* SSS (Side-Side-Side), SAS, ASA, AAS, HL (Hypotenuse-Leg for right triangles).
+
+
+* **Similarity ($\sim$):** Triangles have the **same shape but different sizes**. Corresponding angles are equal, and corresponding sides are **proportional** (scale factor $k$).
+* *Criteria:* AA (Angle-Angle), SAS similarity, SSS similarity.
+
+
+
 ---
 
-Whenever you are ready, drop the next set of math topics below.
+## 8. Special Right Triangles
+
+These triangles appear constantly in geometry and trigonometry because their side lengths follow fixed, predictable ratios.
+
+### A. $45^\circ-45^\circ-90^\circ$ Triangle (Isosceles Right Triangle)
+
+* **Side Ratio:** $1 : 1 : \sqrt{2}$
+* **Rules:** * If the legs are length $x$, the hypotenuse is $x\sqrt{2}$.
+* If the hypotenuse is length $h$, each leg is $\frac{h}{\sqrt{2}} = \frac{h\sqrt{2}}{2}$.
+
+
+
+### B. $30^\circ-60^\circ-90^\circ$ Triangle
+
+* **Side Ratio:** $1 : \sqrt{3} : 2$
+* **Rules:** * **Short Leg ($x$):** Opposite the $30^\circ$ angle. It is always **half the hypotenuse**.
+* **Long Leg ($x\sqrt{3}$):** Opposite the $60^\circ$ angle. It is the short leg multiplied by $\sqrt{3}$.
+* **Hypotenuse ($2x$):** Opposite the $90^\circ$ angle. It is twice the short leg.
+
+
+
+---
+
+## 9. Triangle Lines & Points of Concurrency
+
+### Perpendicular Bisector $\rightarrow$ Circumcenter ($O$)
+
+* **Line Definition:** A line passing through the midpoint of a triangle's side at a $90^\circ$ angle.
+* **Point of Concurrency:** The **Circumcenter**. It is the center of the circle that circumscribes the triangle (passes through all three vertices).
+* **Key Property:** The circumcenter is **equidistant from all three vertices** ($OA = OB = OC = R$, where $R$ is the circumradius).
+* **Location Based on Triangle Type:**
+* **Acute Triangle:** Located strictly **inside** the triangle.
+* **Right Triangle:** Located exactly at the **midpoint of the hypotenuse**.
+* **Obtuse Triangle:** Located strictly **outside** the triangle.
+
+
+
+[Image showing circumcenter location inside an acute triangle, on the hypotenuse of a right triangle, and outside an obtuse triangle]
+
+### Angle Bisector $\rightarrow$ Incenter ($I$)
+
+* **Line Definition:** A line segment that divides an interior angle into two equal halves.
+* **Point of Concurrency:** The **Incenter**. It is the center of the **inscribed circle (incircle)** that is tangent to all three sides.
+* **Key Property:** The incenter is **equidistant from all three sides** of the triangle. The perpendicular distance from the incenter to any side is the inradius ($r$).
+* **Location:** Always located **inside** the triangle, regardless of its shape.
+
+### Median $\rightarrow$ Centroid ($G$)
+
+* **Line Definition:** A line segment connecting a vertex to the midpoint of the opposite side.
+* **Point of Concurrency:** The **Centroid**. This point serves as the physical center of gravity (balancing point) of a flat triangle.
+* **The 2:1 Centroid Rule:** The centroid divides each median into two segments in a $2:1$ ratio. The segment from the vertex to the centroid is twice as long as the segment from the centroid to the midpoint.
+* If a median has length $M$, the distance from vertex to centroid is $\frac{2}{3}M$, and from centroid to side midpoint is $\frac{1}{3}M$.
+
+
+
+### Altitude $\rightarrow$ Orthocenter ($H$)
+
+* **Line Definition:** A perpendicular line segment drawn from a vertex to the opposite side (representing the height).
+* **Point of Concurrency:** The **Orthocenter**.
+* **Location:** Inside an acute triangle, at the right-angle vertex in a right triangle, and outside an conversions obtuse triangle.
+
+---
+
+## 10. Triangle Midsegment Theorem
+
+* **Theorem Definition:** A midsegment is a line segment connecting the midpoints of any two sides of a triangle.
+* **Properties:**
+1. The midsegment is **parallel** to the third side.
+2. The length of the midsegment is exactly **half** the length of the third side.
+
+
+
+$$\text{If } D \text{ and } E \text{ are midpoints, then } DE \parallel BC \text{ and } DE = \frac{1}{2}BC$$
+
