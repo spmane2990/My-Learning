@@ -263,8 +263,6 @@ $$\vert{}x\vert{} = \begin{cases} x & \text{if } x \ge 0 \\ -x & \text{if } x < 
 * **Right Triangle:** Contains exactly one internal angle equal to $90^\circ$.
 * **Obtuse Triangle:** Contains exactly one internal angle greater than $90^\circ$.
 
-![Triangle Properties, Centers, and Theorems](./images/02_triangle-theorems.png)
-
 ## 7. Triangle Classifications & Theorems
 
 ### Triangle Classifications (By Side/Angle Relationships)
@@ -307,7 +305,7 @@ These triangles appear constantly in geometry and trigonometry because their sid
 
 
 
----
+![Triangle Properties, Centers, and Theorems](./images/02_triangle-theorems.png)
 
 ## 9. Triangle Lines & Points of Concurrency
 
