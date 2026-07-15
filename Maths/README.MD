@@ -1,0 +1,196 @@
+Here is the corrected and fully cleaned `README.md` formatting. All typos (such as "sngle" and "annoaration") have been resolved, syntax markup has been standardized for Markdown parsers, and the visual explanations are precisely embedded.
+
+---
+
+# Mathematics Study Notes
+
+A comprehensive, high-density set of reference notes covering fundamental concepts in algebra, coordinate geometry, and basic Euclidean geometry.
+
+---
+
+## 1. Numbers & Radical Expressions
+
+### Irrational & Real Numbers
+
+* **Real Numbers ($\mathbb{R}$):** The set of all rational and irrational numbers, representing every continuous point along the number line.
+* **Irrational Numbers:** Numbers that cannot be expressed as a simple fraction $\frac{a}{b}$ (where $a, b \in \mathbb{Z}, b \neq 0$). Their decimal expansions are non-terminating and non-repeating (e.g., $\pi$, $e$, $\sqrt{2}$).
+
+### Radical Expressions
+
+A radical expression takes the general form:
+
+
+$$\sqrt[n]{x}$$
+
+* **Radicand ($x$):** The value or expression inside the radical sign.
+* **Degree/Index ($n$):** The root being taken. If omitted, it defaults to **2** (square root).
+
+#### Odd vs. Even Roots (Real Solutions)
+
+* **Odd Index (e.g., $\sqrt[3]{x}$, $\sqrt[5]{x}$):** Always yields exactly **one real solution**, regardless of whether the radicand is positive or negative.
+* *Examples:* $\sqrt[3]{27} = 3$ and $\sqrt[3]{-27} = -3$.
+
+
+* **Even Index (e.g., $\sqrt{x}$, $\sqrt[4]{x}$):**
+* If $x > 0$, it yields **two real roots** (one positive, one negative, denoted as $\pm$).
+* If $x < 0$, it yields **zero real solutions** (results in imaginary/complex numbers).
+* *Example:* $x^2 = 16 \implies x = \pm 4$.
+
+
+
+> 💡 **Tip:** When evaluating the radical *function* $f(x) = \sqrt{x}$, only the principal (positive) root is returned to ensure it passes the vertical line test. However, solving an algebraic equation like $x^2 = c$ requires both $\pm$ roots.
+
+---
+
+## 2. Deriving the Quadratic Formula
+
+To solve the standard quadratic equation $ax^2 + bx + c = 0$ ($a \neq 0$), we isolate $x$ by **completing the square**:
+
+1. **Divide the entire equation by $a$:**
+
+$$x^2 + \frac{b}{a}x + \frac{c}{a} = 0$$
+
+
+2. **Isolate the variable terms:**
+
+$$x^2 + \frac{b}{a}x = -\frac{c}{a}$$
+
+
+3. **Add $\left(\frac{b}{2a}\right)^2$ to both sides** to form a perfect square trinomial on the left:
+
+$$x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} = \frac{b^2}{4a^2} - \frac{c}{a}$$
+
+
+4. **Factor the left side and find a common denominator on the right:**
+
+$$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}$$
+
+
+5. **Take the square root of both sides:**
+
+$$x + \frac{b}{2a} = \frac{\pm\sqrt{b^2 - 4ac}}{2a}$$
+
+
+6. **Subtract $\frac{b}{2a}$ to isolate $x$:**
+
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+
+
+---
+
+## 3. Polynomial Theorems & Division
+
+### Synthetic Division
+
+A shorthand computational method used to divide a polynomial by a linear factor of the form $(x - c)$.
+
+* **Example:** Divide $2x^3 - 3x^2 - 5x + 4$ by $x - 3$ ($c = 3$).
+* **Execution Layout:**
+```text
+3 |  2   -3   -5    4
+  |       6    9   12
+  -------------------
+     2    3    4  | 16  <-- Remainder
+
+```
+
+
+* **Resulting Quotient:** $2x^2 + 3x + 4$ with a remainder of $16$, written as:
+
+$$2x^2 + 3x + 4 + \frac{16}{x - 3}$$
+
+
+
+### Rational Root Theorem
+
+If a polynomial $P(x) = a_n x^n + \dots + a_0$ has integer coefficients, every rational root must be of the form $\pm \frac{p}{q}$, where:
+
+* **$p$** = factors of the constant term $a_0$
+* **$q$** = factors of the leading coefficient $a_n$
+
+---
+
+## 4. Coordinate Geometry & Lines
+
+### Linear Equations: Slope-Intercept Form
+
+$$y = mx + c$$
+
+* **Slope ($m$):** Defined as $\frac{\text{Rise}}{\text{Run}} = \frac{y_2 - y_1}{x_2 - x_1}$.
+* **$y$-intercept ($c$):** The point where the line crosses the $y$-axis, represented as $(0, c)$.
+* **$x$-intercept:** Found by setting $y = 0 \implies x = -\frac{c}{m}$.
+
+### Special Line Slopes
+
+* **Horizontal Lines ($y = c$):** Rise is $0$. Therefore, $\text{Slope } m = \frac{0}{\text{Run}} = 0$.
+* **Vertical Lines ($x = k$):** Run is $0$. Therefore, $\text{Slope } m = \frac{\text{Rise}}{0} = \text{Undefined}$ (approaches $\infty$).
+
+### Parallel vs. Perpendicular Lines
+
+* **Parallel Lines:** Slopes are identical ($m_1 = m_2$). The lines run in the same direction and never intersect.
+* **Perpendicular Lines:** Slopes are negative reciprocals ($m_1 \cdot m_2 = -1 \implies m_2 = -\frac{1}{m_1}$). The lines intersect at a right angle ($90^\circ$).
+
+---
+
+## 5. Number Classification Hierarchy
+
+```text
+                           [ Complex Numbers ]
+                                    |
+            +-----------------------+-----------------------+
+            |                                               |
+     [ Real Numbers ]                              [ Imaginary Numbers ]
+            |                                          (e.g., 2i, i√3)
+    +-------+-------+
+    |               |
+[ Rational ]   [ Irrational ] (e.g., π, e, √2)
+    |
+[ Integers ] (..., -2, -1, 0, 1, 2)
+    |
+[ Fractions/Decimals ] (e.g., 1/2, 0.75)
+
+```
+
+* **Absolute Value ($\vert{}x\vert{}$):** The non-negative distance of a number from zero on a one-dimensional number line.
+
+$$\vert{}x\vert{} = \begin{cases} x & \text{if } x \ge 0 \\ -x & \text{if } x < 0 \end{cases}$$
+
+
+
+---
+
+## 6. Geometry Basics & Angle Relationships
+
+### Spatial Dimensions
+
+* **Point (0D):** Indicates a precise location; possesses no width, height, or depth.
+* **Line / Ray (1D):** A line extends infinitely in both directions. A ray starts at an endpoint and extends infinitely in one direction.
+* **Plane (2D):** A flat, continuous surface stretching infinitely in length and width.
+* **Space (3D):** The three-dimensional bounding region containing all volume.
+
+![Basic Angle Relationships and Parallel Lines](./images/geometry-angles.png)
+
+### Core Angle Relationships
+
+* **Adjacent Angles:** Two angles that share a common vertex and side but do not overlap.
+* **Vertical Angles:** Opposite angles formed by the intersection of two lines. Vertical angles are always congruent (equal).
+* **Complementary Angles:** Two angles whose sum equals exactly **$90^\circ$**.
+* **Supplementary Angles:** Two angles whose sum equals exactly **$180^\circ$** (forming a straight line, known as a linear pair).
+
+### Parallel Lines Cut by a Transversal
+
+* **Interior Region:** The structural space bounded between the two parallel lines.
+* **Exterior Region:** The space located outside the parallel lines.
+* **Alternate Interior Angles:** Equal pairs of angles located on opposite sides of the transversal line, within the interior region.
+* **Alternate Exterior Angles:** Equal pairs of angles located on opposite sides of the transversal line, out in the exterior regions.
+
+### Triangles (Classified by Angles)
+
+* **Acute Triangle:** All three internal angles measure less than $90^\circ$.
+* **Right Triangle:** Contains exactly one internal angle equal to $90^\circ$.
+* **Obtuse Triangle:** Contains exactly one internal angle greater than $90^\circ$.
+
+---
+
+Whenever you are ready, drop the next set of math topics below.
