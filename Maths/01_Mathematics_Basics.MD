@@ -563,7 +563,7 @@ For single-term polynomials $f(x) = x^n$:
 * **If $n$ is Odd ($x^3, x^5, x^7$):** The graph resembles an **S-shaped curve**. The ends shoot in opposite directions.
 * *Range:* Fully unbounded, $(-\infty, \infty)$.
 
-![Functions Definitions, Behaviors, and Transformations Grid](./images/function-analysis-grid.png)
+![Functions Definitions, Behaviors, and Transformations Grid](./images/04_function-analysis-grid.png)
 
 ---
 
