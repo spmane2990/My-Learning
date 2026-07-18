@@ -44,6 +44,8 @@ Understanding the distinction between operational and analytical workloads drive
 
 Before data can be trusted in production dashboards, it must undergo automated structural and statistical evaluation. As data ecosystems become increasingly cloud-native, real-time, and automated, trust in data rarely breaks all at once; it fades slowly when metrics look off and dashboard refreshes raise questions. The global data observability market is projected to reach $1.7 billion USD in 2025 and grow to $9.7 billion USD by 2034 with a CAGR of 21.3%, signaling a clear market shift away from manual checks toward automated data reliability.
 
+For more information, see [Data Observability vs. Data Quality](https://www.ovaledge.com/blog/data-observability-vs-data-quality).
+
 ### Automated Data Profiling Types
 
 1. **Attribute Profiling:** Analyzing single columns for data type compliance, null frequencies, distinct value counts, minimum/maximum ranges, and string patterns (e.g., regex matching for emails or phone numbers).
@@ -100,7 +102,7 @@ validation_result = df.validate()
 
 ## 3. Deep Dive: Data Quality vs. Data Observability (OvalEdge Framework)
 
-According to the OvalEdge architectural framework, **Data Quality** and **Data Observability** address entirely distinct reliability risks and should not be treated as interchangeable.
+According to the OvalEdge architectural framework, **Data Quality** and **Data Observability** address entirely distinct reliability risks and should not be treated as interchangeable. For additional context, see [Data Observability vs. Data Quality](https://www.ovaledge.com/blog/data-observability-vs-data-quality).
 
 - **Data Quality (Micro/Correctness Focus):** Validates the _content correctness_ of individual records and datasets. It answers the foundational question: **"Is this data usable?"**
 - **Data Observability (Macro/System Behavior Focus):** Continuously monitors end-to-end system health, infrastructure behavior, and metadata patterns across the pipeline lifecycle. It answers the operational question: **"Is this system behaving normally?"**
