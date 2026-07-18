@@ -1,4 +1,3 @@
-
 ---
 
 ```markdown
@@ -9,11 +8,12 @@ A comprehensive, production-grade guide to mastering system data structures and 
 ---
 
 ## Table of Contents
+
 1. [Data Engineering Utility Matrix](#1-data-engineering-utility-matrix)
 2. [Deep Dives: The Data Engineering Trio (`awk`, `sed`, `cut`)](#2-deep-dives-the-data-engineering-trio-awk-sed-cut)
-    - [awk (Advanced Text State Machine)](#awk-advanced-text-state-machine)
-    - [sed (Stream Editor Transformations)](#sed-stream-editor-transformations)
-    - [cut (High-Speed Column Slicing)](#cut-high-speed-column-slicing)
+   - [awk (Advanced Text State Machine)](#awk-advanced-text-state-machine)
+   - [sed (Stream Editor Transformations)](#sed-stream-editor-transformations)
+   - [cut (High-Speed Column Slicing)](#cut-high-speed-column-slicing)
 3. [Operators: Unary & Ternary Operations in Linux Utilities](#3-operators-unary--ternary-operations-in-linux-utilities)
 4. [Targeted Scenario Implementations](#4-targeted-scenario-implementations)
 5. [Advanced Core Linux File Infrastructure Operations](#5-advanced-core-linux-file-infrastructure-operations)
@@ -24,47 +24,49 @@ A comprehensive, production-grade guide to mastering system data structures and 
 
 ## 1. Data Engineering Utility Matrix
 
-| Command | Primary ETL Purpose | Data Engineering Workload Context |
-| :--- | :--- | :--- |
-| **`grep`** | Search text via Regex patterns | Filtering anomalous error lines or distinct schemas from bulk system logs. |
-| **`awk`** | Structured record scanning & processing | Multi-column parsing, state tracking, window aggregations, calculations. |
-| **`sed`** | Fine-grained character stream modification | Inline data scrubbing, string replacements, regex restructuring, deleting headers. |
-| **`cut`** | Low-overhead positional schema manipulation | Isolating specific structured fields from flat, wide data files (CSV, TSV). |
-| **`sort`** | High-performance memory-mapped sorting | Ordering staging files; required before joining or deduplicating. |
-| **`uniq`** | Record de-duplication and aggregation | Counting or identifying duplicate distributions (e.g., `uniq -c`). |
-| **`wc`** | Row-count structure validations | Row validation checks between extraction layers and target databases. |
-| **`head` / `tail`**| Deterministic dataset sampling | Quick schema checking; monitoring streaming queues in active stdout environments. |
-| **`cat`** | Stream concatenation | Merging partitioned block-files before copying into a target data warehouse. |
-| **`find`** | Directory architecture scanning | Searching for unstructured raw landings matching specific timestamps/formats. |
-| **`xargs`** | Dynamic multi-threaded pipeline binding | Parallelizing processing by piping file matrices into transformation processes. |
-| **`tr`** | String translations & mutations | Standardizing case styles (lower/upper) or dropping bad delimiters/characters. |
-| **`paste`** | Parallel matrix alignment | Horizontal field stitching of unrelated records into a combined format. |
-| **`join`** | Relational inner/outer lookups | Joining two pre-sorted files on a primary key field without loading code. |
-| **`comm`** | Data reconciliation checking | Generating symmetric difference metrics between source and target datasets. |
-| **`split`** | Parallelization chunking partitions | Splitting massive multiline text tables into small blocks for parallel loads. |
-| **`gzip`/`gunzip`**| Storage compression management | Native, ubiquitous file footprint compression/decompression on local storage. |
-| **`tar`** | Multi-file transport archives | Archiving logs or deep project artifacts into structured single-object bundles. |
-| **`tee`** | Pipeline execution logging tracking | Storing full process results to a physical file while passing stdout onward. |
-| **`curl` / `wget`**| Endpoint programmatic data extractions | Ingesting raw JSON payloads or dataset files directly from APIs or servers. |
-| **`ssh` / `scp`** | Network secure command execution | Triggering processing actions on staging clusters; direct secure file uploads. |
-| **`rsync`** | Differential data warehouse synchronizations| Incremental backups; syncs directory updates across target zones safely. |
+| Command             | Primary ETL Purpose                          | Data Engineering Workload Context                                                  |
+| :------------------ | :------------------------------------------- | :--------------------------------------------------------------------------------- |
+| **`grep`**          | Search text via Regex patterns               | Filtering anomalous error lines or distinct schemas from bulk system logs.         |
+| **`awk`**           | Structured record scanning & processing      | Multi-column parsing, state tracking, window aggregations, calculations.           |
+| **`sed`**           | Fine-grained character stream modification   | Inline data scrubbing, string replacements, regex restructuring, deleting headers. |
+| **`cut`**           | Low-overhead positional schema manipulation  | Isolating specific structured fields from flat, wide data files (CSV, TSV).        |
+| **`sort`**          | High-performance memory-mapped sorting       | Ordering staging files; required before joining or deduplicating.                  |
+| **`uniq`**          | Record de-duplication and aggregation        | Counting or identifying duplicate distributions (e.g., `uniq -c`).                 |
+| **`wc`**            | Row-count structure validations              | Row validation checks between extraction layers and target databases.              |
+| **`head` / `tail`** | Deterministic dataset sampling               | Quick schema checking; monitoring streaming queues in active stdout environments.  |
+| **`cat`**           | Stream concatenation                         | Merging partitioned block-files before copying into a target data warehouse.       |
+| **`find`**          | Directory architecture scanning              | Searching for unstructured raw landings matching specific timestamps/formats.      |
+| **`xargs`**         | Dynamic multi-threaded pipeline binding      | Parallelizing processing by piping file matrices into transformation processes.    |
+| **`tr`**            | String translations & mutations              | Standardizing case styles (lower/upper) or dropping bad delimiters/characters.     |
+| **`paste`**         | Parallel matrix alignment                    | Horizontal field stitching of unrelated records into a combined format.            |
+| **`join`**          | Relational inner/outer lookups               | Joining two pre-sorted files on a primary key field without loading code.          |
+| **`comm`**          | Data reconciliation checking                 | Generating symmetric difference metrics between source and target datasets.        |
+| **`split`**         | Parallelization chunking partitions          | Splitting massive multiline text tables into small blocks for parallel loads.      |
+| **`gzip`/`gunzip`** | Storage compression management               | Native, ubiquitous file footprint compression/decompression on local storage.      |
+| **`tar`**           | Multi-file transport archives                | Archiving logs or deep project artifacts into structured single-object bundles.    |
+| **`tee`**           | Pipeline execution logging tracking          | Storing full process results to a physical file while passing stdout onward.       |
+| **`curl` / `wget`** | Endpoint programmatic data extractions       | Ingesting raw JSON payloads or dataset files directly from APIs or servers.        |
+| **`ssh` / `scp`**   | Network secure command execution             | Triggering processing actions on staging clusters; direct secure file uploads.     |
+| **`rsync`**         | Differential data warehouse synchronizations | Incremental backups; syncs directory updates across target zones safely.           |
 
 ---
 
 ## 2. Deep Dives: The Data Engineering Trio (`awk`, `sed`, `cut`)
 
 ### `awk` (Advanced Text State Machine)
+
 `awk` is a complete programming language built around field arrays. It evaluates logic on every line (`record`) broken up by a character delimiter (`FS`), keeping memory allocations highly efficient.
 
-*   **Syntax**: `awk -F'<delimiter>' 'BEGIN{...} <pattern> {action} END{...}' file`
-*   **Key Engineering Variables**:
-    *   `$0`: Represents the entire raw row context.
-    *   `$1, $2... $N`: Target columns based on the designated field separator.
-    *   `NF`: Number of fields present on the current line (excellent for dropping truncated rows).
-    *   `NR`: Number of records (current line count indicator).
-    *   `FS`: Current field separator dynamically assigned inside the process block.
+- **Syntax**: `awk -F'<delimiter>' 'BEGIN{...} <pattern> {action} END{...}' file`
+- **Key Engineering Variables**:
+  - `$0`: Represents the entire raw row context.
+  - `$1, $2... $N`: Target columns based on the designated field separator.
+  - `NF`: Number of fields present on the current line (excellent for dropping truncated rows).
+  - `NR`: Number of records (current line count indicator).
+  - `FS`: Current field separator dynamically assigned inside the process block.
 
 #### Examples:
+
 ```bash
 # Calculate average transaction amount from column 5 of a CSV file, ignoring the line 1 header
 awk -F',' 'NR > 1 { sum += $5; count++ } END { print "Average Transaction: " (count > 0 ? sum / count : 0) }' sales.csv
@@ -78,13 +80,11 @@ awk -F'\t' 'NF == 12' inventory.tsv
 
 `sed` scans inputs and mutates values line-by-line using regular expressions without loading the files completely into standard system memory.
 
-* **Syntax**: `sed [options] 'command' file`
-* **Core Engineering Operations**:
-* `s/regex/replacement/g`: Global substitution of target values.
-* `-i`: Inline modification (permanently updates the source file structure).
-* `-E`: Activates Extended Regular Expression engine capabilities.
-
-
+- **Syntax**: `sed [options] 'command' file`
+- **Core Engineering Operations**:
+  - `s/regex/replacement/g`: Global substitution of target values.
+  - `-i`: Inline modification (permanently updates the source file structure).
+  - `-E`: Activates Extended Regular Expression engine capabilities.
 
 #### Examples:
 
@@ -101,7 +101,7 @@ sed -i 's/\r$//' raw_windows_ingest.log
 
 `cut` extracts explicit columns from files with low compute overhead. When conditional criteria or aggregations aren't needed, `cut` out-performs `awk`.
 
-* **Syntax**: `cut -d'<delimiter>' -f<fields> file`
+- **Syntax**: `cut -d'<delimiter>' -f<fields> file`
 
 #### Examples:
 
@@ -173,7 +173,7 @@ echo "$STATUS_MESSAGE"
 
 ### Scenario A: Complex Aggregations & Conditional Math (`awk`)
 
-**Use Case:** Calculate the total revenue and percentage contribution of *only completed transactions* that occurred during a specific promo code campaign, while dropping corrupted records.
+**Use Case:** Calculate the total revenue and percentage contribution of _only completed transactions_ that occurred during a specific promo code campaign, while dropping corrupted records.
 
 ```bash
 # Implementation:
@@ -332,7 +332,7 @@ METRICS_SUMMARY="$OUTPUT_DIR/summary_report.md"
 initialize_mock_data() {
     mkdir -p "$SOURCE_DIR" "$OUTPUT_DIR"
     echo "Bootstrapping environment metadata structures..."
-    
+
     cat << 'EOF' > "$SOURCE_DIR/node_alpha_events.log"
 timestamp,event_id,severity,response_time_ms,bytes_sent
 2026-07-19 01:00:05,EVT101,INFO,45,2048
@@ -377,12 +377,12 @@ execute_etl_pipeline() {
     echo "[Step 2/4] Executing structural cleanup edits via sed stream configurations..."
     local sanitized_cache
     sanitized_cache=$(mktemp)
-    
+
     # Capitalize all severity tags via sed for standardization
     sed -E 's/,([a-z]+),/,\U\1,/g' "$raw_unified_cache" > "$sanitized_cache"
 
     echo "[Step 3/4] Running multi-column aggregations & ternary classifications via awk..."
-    
+
     # Initialize output file format template
     {
         echo "# Data Pipeline Aggregation Run Summary"
@@ -410,7 +410,7 @@ execute_etl_pipeline() {
 
         # Print formatted values directly into markdown table array loops
         printf "| %-8s | %-8s | %-12d | %-22s |\n", event_id, severity, latency, latency_flag;
-        
+
         # Increment metric arrays tracking operational buckets
         severity_distribution[severity]++;
     }
@@ -419,7 +419,7 @@ execute_etl_pipeline() {
         print "--------------------------------------------------------" >> "'$METRICS_SUMMARY'"
         printf "* Total Events Extracted & Normalised: %d\n", total_records >> "'$METRICS_SUMMARY'"
         printf "* Cumulative Data Transfer Footprint: %.2f KB\n\n", (total_bandwidth / 1024) >> "'$METRICS_SUMMARY'"
-        
+
         print "### Incidents Breakdown By Node Severities:" >> "'$METRICS_SUMMARY'"
         for (type in severity_distribution) {
             printf "  - **%s**: %d incident records parsed.\n", type, severity_distribution[type] >> "'$METRICS_SUMMARY'"
@@ -429,7 +429,7 @@ execute_etl_pipeline() {
 
     # --- Step 4: Cleanup & Output Summary Verification ---
     rm -f "$raw_unified_cache" "$sanitized_cache"
-    
+
     echo "[Step 4/4] Final ETL data mart target generated successfully."
     echo -e "\n=== PRINTING GENERATED METRICS INGESTION SUMMARY ===\n"
     cat "$METRICS_SUMMARY"
