@@ -1,10 +1,7 @@
 ---
-
-```markdown
 # High-Performance Data Engineering Text Processing & File Management
 
 A comprehensive, production-grade guide to mastering system data structures and file processing using core Linux utilities. This guide maps core text manipulation tools to standard Data Engineering/ETL pipelines, details practical multi-scenario implementations, covers complex syntax (including unary and ternary logic operations), and concludes with a production-ready analytics pipeline shell script.
-
 ---
 
 ## Table of Contents
@@ -67,14 +64,12 @@ A comprehensive, production-grade guide to mastering system data structures and 
 
 #### Examples:
 
-```bash
+````bash
 # Calculate average transaction amount from column 5 of a CSV file, ignoring the line 1 header
 awk -F',' 'NR > 1 { sum += $5; count++ } END { print "Average Transaction: " (count > 0 ? sum / count : 0) }' sales.csv
 
 # Schema enforcement: Output lines containing exactly 12 structured fields
 awk -F'\t' 'NF == 12' inventory.tsv
-
-```
 
 ### `sed` (Stream Editor Transformations)
 
@@ -95,7 +90,7 @@ sed -E 's/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/\3-\2-\1/g' structural_dates.txt
 # Remove trailing Windows carriage returns (\r) from automated server log ingestions
 sed -i 's/\r$//' raw_windows_ingest.log
 
-```
+````
 
 ### `cut` (High-Speed Column Slicing)
 
